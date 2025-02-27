@@ -10,13 +10,9 @@ int headx = 10;
 int heady = 10;
 int foodx;
 int foody;
-
-void creatFood()
-{
-	int foodx = 1 + rand() % 18;
-	int foody = 1 + rand() % 18;
-
-}
+int score = 0;
+int bodyx[100];
+int bodyy[100];
 
 
 void draw()
@@ -36,15 +32,20 @@ void draw()
 			else if (i == heady && j == headx) {
 				printf("O");
 			}
-			else {
+            else if (i == bodyy[i] && j == bodyx[i]) {
+				printf("o");
+			}
+			else
+			{
 				printf(" ");
 			}
+			
 		}
-		printf("\n");
+        printf("\n");
 	}
 }
 
-void moveHead()
+void move()
 {
 	char key = getch();
 	switch (key)
@@ -54,33 +55,45 @@ void moveHead()
 	case 'a':headx--; break;
 	case 'd':headx++; break;
 	}
+	for (int i = score; i > 0; i--) {
+		bodyx[i] = bodyx[i - 1];
+		bodyy[i] = bodyy[i - 1];
+	}
+    bodyx[0] = headx;
+    bodyy[0] = heady;
 }
 
+void cursh()
+{
+	if (headx == foodx && heady == foody) {
+		foodx = rand() % 19;
+		foody = rand() % 19;
+		
+        bodyx[score] = headx;
+        bodyy[score] = heady;
+		score++;
+	}
+	if (headx == 0 || headx == 19 || heady == 0 || heady == 19) {
+		system("cls");
+        printf("Game Over");
+        exit(0);
+	}
 
+}
 
 
 
 int main()
 {
+	foodx = rand() % 19;
+	foody = rand() % 19;
+    while (1)
+    {
 
-	while (1)
-	{
-		draw();
-		moveHead();
+		cursh();
+        draw();
 
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-	return 0;
+        move();
+        Sleep(100);
+    }
 }
