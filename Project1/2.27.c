@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<windows.h>
+
+
+#define WIDTH 20
+#define HIGHT 20
+
+int headx = 10;
+int heady = 10;
+int foodx;
+int foody;
+
+void creatFood()
+{
+	int foodx = 1 + rand() % 18;
+	int foody = 1 + rand() % 18;
+
+}
+
+
+void draw()
+{
+	system("cls");
+
+
+
+	for (int i = 0; i < HIGHT; i++) {
+		for (int j = 0; j < WIDTH; j++) {
+			if (i == 0 || i == HIGHT - 1 || j == 0 || j == WIDTH - 1) {
+				printf("#");
+			}
+			else if (i == foody && j == foodx) {
+				printf("*");
+			}
+			else if (i == heady && j == headx) {
+				printf("O");
+			}
+			else {
+				printf(" ");
+			}
+		}
+		printf("\n");
+	}
+}
+
+void moveHead()
+{
+	char key = getch();
+	switch (key)
+	{
+	case 'w':heady--; break;
+	case 's':heady++; break;
+	case 'a':headx--; break;
+	case 'd':headx++; break;
+	}
+}
+
+
+
+
+
+int main()
+{
+
+	while (1)
+	{
+		draw();
+		moveHead();
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	return 0;
+}
