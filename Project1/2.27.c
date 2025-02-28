@@ -1,99 +1,128 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<time.h>
 #include<windows.h>
 
+int foodx, foody;
+int length=0;
 
-#define WIDTH 20
-#define HIGHT 20
-
-int headx = 10;
-int heady = 10;
-int foodx;
-int foody;
-int score = 0;
-int bodyx[100];
-int bodyy[100];
-
-
-void draw()
+void draw( int snakex[], int snakey[])
 {
-	system("cls");
-
-
-
-	for (int i = 0; i < HIGHT; i++) {
-		for (int j = 0; j < WIDTH; j++) {
-			if (i == 0 || i == HIGHT - 1 || j == 0 || j == WIDTH - 1) {
-				printf("#");
-			}
-			else if (i == foody && j == foodx) {
-				printf("*");
-			}
-			else if (i == heady && j == headx) {
-				printf("O");
-			}
-            else if (i == bodyy[i] && j == bodyx[i]) {
-				printf("o");
-			}
-			else
-			{
-				printf(" ");
-			}
-			
-		}
+    system("cls");
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 20; j++) {
+            if (i == 0 || i == 19 || j == 0 || j == 19){
+                printf("#");
+            }
+            else if (i == foodx && j == foody) {
+                printf("*");
+            }
+            else if (i == snakex[0] && j == snakey[0]) {
+                printf("O");
+            }
+            else {
+                int p = 0;
+                for (int k = 1; k < length; k++) {
+                    if (i == snakex[k] && j == snakey[k]) {
+                        printf("o");
+                        p= 1;
+                        break;
+                    }
+                }
+                if (p == 0)
+                    printf(" ");
+            }
+        }
         printf("\n");
-	}
+    }
 }
 
-void move()
+void move(int snakex[], int snakey[])
 {
-	char key = getch();
-	switch (key)
-	{
-	case 'w':heady--; break;
-	case 's':heady++; break;
-	case 'a':headx--; break;
-	case 'd':headx++; break;
-	}
-	for (int i = score; i > 0; i--) {
-		bodyx[i] = bodyx[i - 1];
-		bodyy[i] = bodyy[i - 1];
-	}
-    bodyx[0] = headx;
-    bodyy[0] = heady;
+    char input;
+
+    // 保存蛇头的当前位置
+    int headx = snakex[0];
+    int heady = snakey[0];
+
+    // 更新蛇身的位置
+    for (int i = length - 1; i > 0; i--) {
+        snakex[i] = snakex[i - 1];
+        snakey[i] = snakey[i - 1];
+    }
+
+    // 根据用户输入更新蛇头的位置
+    input = getch();
+    switch (input) {
+    case 'w':
+        snakex[0]--;
+        break;
+    case 's':
+        snakex[0]++;
+        break;
+    case 'a':
+        snakey[0]--;
+        break;
+    case 'd':
+        snakey[0]++;
+        break;
+    }
+
+    // 如果蛇吃到食物，蛇身会变长，需要为新的蛇尾赋值
+    if (length > 1) {
+        snakex[length - 1] = headx;
+        snakey[length - 1] = heady;
+    }
 }
 
-void cursh()
+void cursh(int snakex[], int snakey[])
 {
-	if (headx == foodx && heady == foody) {
-		foodx = rand() % 19;
-		foody = rand() % 19;
-		
-        bodyx[score] = headx;
-        bodyy[score] = heady;
-		score++;
-	}
-	if (headx == 0 || headx == 19 || heady == 0 || heady == 19) {
-		system("cls");
+    if (snakex[0] == 0 || snakex[0] == 19 || snakey[0] == 0 || snakey[0] == 19) {
         printf("Game Over");
         exit(0);
-	}
-
+    }
+    for (int i = 1; i < length; i++) {
+        if (snakex[0] == snakex[i] && snakey[0] == snakey[i]) {
+            printf("Game Over");
+            exit(0);
+        }
+    }
+    if (snakex[0] == foodx && snakey[0] == foody) {
+        foodx = rand() % 18 + 1;
+        foody = rand() % 18 + 1;
+        length++;
+        snakex[length] = snakex[length - 1];
+        snakey[length] = snakey[length - 1];
+    }
 }
-
 
 
 int main()
 {
-	foodx = rand() % 19;
-	foody = rand() % 19;
-    while (1)
-    {
+    srand(time(NULL));
 
-		cursh();
-        draw();
 
-        move();
+    int snakex[20];
+    int snakey[20];
+
+
+
+    foodx = rand() % 18 + 1;
+    foody = rand() % 18 + 1;
+
+    snakex[0] = 10;
+    snakey[0] = 10;
+
+    while (1) {
         Sleep(100);
+        cursh(snakex, snakey );
+        draw( snakex, snakey);
+        move(snakex, snakey);
+
+
+
+
     }
+
+    return 0;
 }
