@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-
+/*
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -129,4 +129,66 @@ int main()
 	search_list(head);
 	free_list(head);
 	return 0;
+}
+*/
+
+#include<stdio.h>
+#include<stdlib.h>
+
+
+
+struct node
+{
+	int data;
+	struct node* prev;
+    struct node* next;
+};
+
+void print_list(struct node* head, struct node* tail) 
+{
+	struct node* q;
+	q = head->next;
+	while (q)
+	{
+		printf("%d ", q->data);
+		q = q->next;
+	}
+	printf("\n");
+	q = tail;
+	while (q != head)
+	{
+		printf("%d ", q->data);
+		q = q->prev;
+	}
+}
+
+
+
+int main()
+{
+	struct node* head;
+	struct node* tail;
+	head = (struct node*)malloc(sizeof(struct node));
+	head->prev = NULL;
+	head->next = NULL;
+
+    tail = head;
+
+	for (int i = 0; i < 10; i++)
+	{
+        struct node* p;
+        p = (struct node*)malloc(sizeof(struct node));
+		
+        p->data = rand() % 100;
+		p->prev = tail;
+		p->next = NULL;
+        tail->next = p;
+        tail = p;
+	}
+	//tail->next = head;
+    //head->prev = tail;
+
+
+	print_list(head, tail);
+
 }
