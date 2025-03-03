@@ -131,19 +131,15 @@ int main()
 	return 0;
 }
 */
-
+/*
 #include<stdio.h>
 #include<stdlib.h>
-
-
-
-struct node
+st	ruct node
 {
 	int data;
 	struct node* prev;
     struct node* next;
 };
-
 void print_list(struct node* head, struct node* tail) 
 {
 	struct node* q;
@@ -161,9 +157,6 @@ void print_list(struct node* head, struct node* tail)
 		q = q->prev;
 	}
 }
-
-
-
 int main()
 {
 	struct node* head;
@@ -192,3 +185,139 @@ int main()
 	print_list(head, tail);
 
 }
+*/
+/*
+#include<stdio.h>
+
+typedef struct
+{
+    int data[20];
+	int top;
+}Stack;
+
+typedef struct
+{
+    int data[20];
+	int top1;
+    int top2;
+}DoubleStack;
+
+int main()
+{
+	Stack s;
+	DoubleStack ds;
+
+	/*for (int i = 0; i < 10; i++)
+	{
+		s.top++;
+		s.data[s.top] = i;
+	}
+    for (int i = 0; i < 10; i++)
+    {
+        printf("%d ", s.data[s.top]);
+        s.top--;
+    }
+
+	ds.top1 = -1;
+    ds.top2 = 20;
+
+
+
+
+
+
+
+}
+*/
+/*
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct StackNode
+{
+	int data;
+	struct StackNode* next;
+}StackNode;
+
+typedef struct LinkStack
+{
+    struct StackNode* top;
+    int count;
+}LinkStack;
+
+int main()
+{
+	LinkStack s;
+	s.top = NULL;
+    s.count = 0;
+	for (int i = 0; i < 10; i++)
+	{
+
+		StackNode* newNode = (StackNode*)malloc(sizeof(StackNode));
+
+		newNode->data = rand()%10;
+		newNode->next = s.top;
+		s.top = newNode;
+		s.count++;
+	}
+	
+	StackNode* temp = s.top;
+	int data = temp->data;
+	s.top = temp->next;
+	free(temp);
+	s.count--;
+
+	printf("%d\n", data);
+
+	printf("%d", s.top->data);
+	return 0;
+}*/
+/*
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct QNode
+{
+	int data;
+	struct QNode* next;
+}QNode;
+
+typedef struct
+{
+	QNode* front;
+	QNode* rear;
+}LinkQueue;
+
+int main()
+{
+	LinkQueue q;
+	q.front = q.rear = NULL;
+
+	for (int i = 0; i < 10; i++)
+	{
+		QNode* newNode = (QNode*)malloc(sizeof(QNode));
+		newNode->data = rand()%10;
+		newNode->next = NULL;
+		printf("%d ", newNode->data);
+		if (q.rear == NULL) {
+			q.front = q.rear = newNode;
+		}
+		else {
+			q.rear->next = newNode;
+			q.rear = newNode;
+		}
+	}
+	printf("\n");
+	for (int i = 0; i < 10; i++) {
+		QNode* temp = q.front;
+		int data = temp->data;
+		q.front = q.front->next;
+
+		printf("%d ", data);
+		free(temp);
+	}
+	
+
+
+
+}
+*/
