@@ -52,3 +52,26 @@ int main()
 
 	return 0;
 }*/
+
+struct ListNode* partition(struct ListNode* head, int x) {
+	struct ListNode less = { 0 };
+	struct ListNode greater = { 0 };
+	struct ListNode* p, * q;
+	p = &less;
+	q = &greater;
+	while (head != NULL) {
+		if (head->val < x) {
+			p->next = head;
+			p = p->next;
+			head = head->next;
+		}
+		else {
+			q->next = head;
+			q = q->next;
+			head = head->next;
+		}
+	}
+	p->next = q->next;
+	q->next = NULL;
+	return less.next;
+}
