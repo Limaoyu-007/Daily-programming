@@ -52,7 +52,7 @@ int main()
 
 	return 0;
 }*/
-
+/*
 struct ListNode* partition(struct ListNode* head, int x) {
 	struct ListNode less = { 0 };
 	struct ListNode greater = { 0 };
@@ -74,4 +74,72 @@ struct ListNode* partition(struct ListNode* head, int x) {
 	p->next = q->next;
 	q->next = NULL;
 	return less.next;
+}*/
+/*选定反转链表
+#include<stdio.h>
+#include<stdlib.h>
+struct ListNode {
+	int val;
+	struct ListNode* next;
+};
+struct ListNode* cratList()
+{
+	struct ListNode* head = (struct ListNode*)malloc(sizeof(struct ListNode));
+
+
+	head->next = NULL;
+	struct ListNode* p = head;
+
+	for (int i = 0; i < 10; i++) {
+		struct ListNode* newNode;
+		newNode = (struct ListNode*)malloc(sizeof(struct ListNode));
+		newNode->val = i;
+		newNode->next = p->next;
+		p->next = newNode;
+	}
+	p = head->next;
+	while (p) {
+		printf("%d ", p->val);
+		p = p->next;
+	}
+	return head;
 }
+
+int main()
+{
+	struct ListNode* head,*p,*pre,*cur,*next;
+	head = cratList();
+	int left = 3;
+	int right = 7;
+
+	p = head;
+	for (int i = 0; i < left - 1; i++) {
+		p= p->next;
+	}
+	pre= p;
+	cur = pre->next;
+	for (int i = 0; i < right - left ; i++) {
+		p= p->next;
+	}
+	next=cur->next;
+	while (next!= p->next) {
+		pre->next = next;
+        cur->next = next->next;
+        next->next = cur;
+		cur = next;
+        next = cur->next;
+	}
+	p= head->next;
+	printf("\n");
+	while(p) {
+		printf("%d ", p->val);
+		p= p->next;
+	}
+
+
+
+
+
+
+	return 0;
+}*/
